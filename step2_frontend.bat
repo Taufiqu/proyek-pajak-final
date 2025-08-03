@@ -22,13 +22,12 @@ if %errorlevel% neq 0 (
 
 echo [CHECK] Checking npm...
 npm --version >nul 2>&1
-if %errorlevel% neq 0 (
+if !errorlevel! neq 0 (
     echo [ERROR] npm tidak ditemukan!
     pause
     exit /b 1
 ) else (
-    for /f "tokens=*" %%v in ('npm --version 2^>^&1') do set NPM_VERSION=%%v
-    echo [SUCCESS] npm !NPM_VERSION! ditemukan
+    echo [SUCCESS] npm ditemukan
 )
 
 REM ========== SETUP FRONTEND ==========
