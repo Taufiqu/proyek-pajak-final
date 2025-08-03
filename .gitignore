@@ -8,12 +8,16 @@ __pycache__/
 *.pyc
 *.pyo
 venv/
+env/
+.venv/
 uploads/
 debug/
 *.jpg
 
 # ========== FLASK BACKEND ==========
 /backend/venv/
+/backend/env/
+/backend/.venv/
 /backend/uploads/
 /backend/__pycache__/
 /backend/.env

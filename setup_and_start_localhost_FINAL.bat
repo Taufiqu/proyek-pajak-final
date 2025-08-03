@@ -1,10 +1,15 @@
 @echo off
 setlocal enabledelayedexpansion
 
+REM Enable debug mode - remove REM below to enable detailed output
+REM echo on
+
 echo ================================================
 echo [START] Pajak Tools - Setup dan Jalankan Localhost 
 echo ================================================
 echo [INFO] Script otomatis untuk setup dan menjalankan aplikasi
+echo [DEBUG] Current directory: %CD%
+echo [DEBUG] Script location: %~dp0
 echo.
 
 REM ========== CHECK PYTHON ==========
@@ -98,19 +103,43 @@ if %errorlevel% neq 0 (
 
 echo [INFO] Upgrading pip...
 python -m pip install --upgrade pip
+if %errorlevel% neq 0 (
+    echo [WARNING] Pip upgrade failed, continuing...
+)
 
 echo [INFO] Installing dependencies dari requirements.txt...
 if exist requirements.txt (
     echo [INFO] Installing basic packages first...
     pip install Flask Flask-Cors Flask-SQLAlchemy Flask-Migrate SQLAlchemy python-dotenv
-    pip install Flask-RESTful pytesseract Pillow pdf2image openpyxl thefuzz pandas psycopg2-binary
-    pip install pyspellchecker textdistance
-    
-    echo [INFO] Installing remaining packages (some may fail on devices without build tools)...
-    pip install -r requirements.txt --timeout 300 || (
-        echo [WARNING] Some packages failed to install - aplikasi tetap bisa berjalan untuk fitur dasar
+    if %errorlevel% neq 0 (
+        echo [ERROR] Failed to install basic Flask packages
+        echo [DEBUG] Trying with --user flag...
+        pip install --user Flask Flask-Cors Flask-SQLAlchemy Flask-Migrate SQLAlchemy python-dotenv
     )
-    echo [INFO] Dependency installation completed
+    
+    echo [INFO] Installing additional packages...
+    pip install Flask-RESTful pytesseract Pillow pdf2image openpyxl thefuzz pandas psycopg2-binary
+    if %errorlevel% neq 0 (
+        echo [WARNING] Some additional packages failed, trying individual install...
+        pip install Flask-RESTful || echo [WARNING] Flask-RESTful failed
+        pip install pytesseract || echo [WARNING] pytesseract failed  
+        pip install Pillow || echo [WARNING] Pillow failed
+        pip install pdf2image || echo [WARNING] pdf2image failed
+        pip install openpyxl || echo [WARNING] openpyxl failed
+        pip install thefuzz || echo [WARNING] thefuzz failed
+        pip install pandas || echo [WARNING] pandas failed
+        pip install psycopg2-binary || echo [WARNING] psycopg2-binary failed
+    )
+    
+    echo [INFO] Installing text processing packages...
+    pip install pyspellchecker textdistance
+    if %errorlevel% neq 0 (
+        echo [WARNING] Text processing packages failed, trying individual install...
+        pip install pyspellchecker || echo [WARNING] pyspellchecker failed
+        pip install textdistance || echo [WARNING] textdistance failed
+    )
+    
+    echo [INFO] Dependency installation completed (errors above can be ignored for basic functionality)
 ) else (
     echo [ERROR] File requirements.txt tidak ditemukan!
     pause
