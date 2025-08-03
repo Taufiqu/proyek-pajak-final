@@ -236,12 +236,31 @@ if exist requirements.txt (
     )
     echo [SUCCESS] Critical Flask packages installed
     
-    echo [STEP 2/3] Installing utility packages...
-    pip install Flask-RESTful pytesseract Pillow pdf2image openpyxl thefuzz pandas psycopg2-binary pyspellchecker textdistance
+    echo [STEP 2/3] Installing critical utility packages...
+    echo [INFO] Installing Pillow (PIL) for image processing...
+    pip install Pillow
     if !errorlevel! neq 0 (
-        echo [WARNING] Beberapa utility packages gagal install, melanjutkan...
+        echo [ERROR] Gagal install Pillow - diperlukan untuk image processing
+        echo [ERROR] Coba install Microsoft Visual C++ Build Tools
+        echo [PAUSE] Tekan tombol apapun untuk keluar...
+        pause
+        exit /b 1
+    )
+    
+    echo [INFO] Installing essential packages...
+    pip install Flask-RESTful openpyxl thefuzz pandas psycopg2-binary pyspellchecker textdistance
+    if !errorlevel! neq 0 (
+        echo [WARNING] Beberapa essential packages gagal install, melanjutkan...
     ) else (
-        echo [SUCCESS] Utility packages installed
+        echo [SUCCESS] Essential packages installed
+    )
+    
+    echo [INFO] Installing OCR packages (optional)...
+    pip install pytesseract pdf2image
+    if !errorlevel! neq 0 (
+        echo [WARNING] OCR packages gagal install - fitur OCR mungkin tidak berfungsi
+    ) else (
+        echo [SUCCESS] OCR packages installed
     )
     
     echo [STEP 3/3] Installing remaining packages (some may fail)...
