@@ -12,7 +12,7 @@ echo [CHECK] Checking Python installation...
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
     echo [ERROR] Python tidak ditemukan!
-    echo [INFO] Jalankan setup_and_start.bat terlebih dahulu untuk setup lengkap
+    echo [INFO] Jalankan step1_backend.bat atau setup_wizard.bat untuk setup Python
     echo [PAUSE] Tekan tombol apapun untuk keluar...
     pause
     exit /b 1
@@ -26,7 +26,7 @@ echo [CHECK] Checking Node.js installation...
 node --version >nul 2>&1
 if %errorlevel% neq 0 (
     echo [ERROR] Node.js tidak ditemukan!
-    echo [INFO] Jalankan setup_and_start.bat terlebih dahulu untuk setup lengkap
+    echo [INFO] Jalankan step2_manual.bat atau setup_wizard.bat untuk setup Node.js
     echo [PAUSE] Tekan tombol apapun untuk keluar...
     pause
     exit /b 1
@@ -39,7 +39,7 @@ REM ========== CHECK BACKEND SETUP ==========
 echo [CHECK] Checking backend setup...
 if not exist "%~dp0backend\venv" (
     echo [ERROR] Virtual environment tidak ditemukan!
-    echo [INFO] Jalankan setup_and_start.bat terlebih dahulu untuk setup lengkap
+    echo [INFO] Jalankan step1_backend.bat atau setup_wizard.bat untuk setup backend
     echo [PAUSE] Tekan tombol apapun untuk keluar...
     pause
     exit /b 1
@@ -51,7 +51,7 @@ REM ========== CHECK FRONTEND SETUP ==========
 echo [CHECK] Checking frontend setup...
 if not exist "%~dp0frontend\node_modules" (
     echo [ERROR] Node modules tidak ditemukan!
-    echo [INFO] Jalankan setup_and_start.bat terlebih dahulu untuk setup lengkap
+    echo [INFO] Jalankan step2_manual.bat atau setup_wizard.bat untuk setup frontend
     echo [PAUSE] Tekan tombol apapun untuk keluar...
     pause
     exit /b 1
