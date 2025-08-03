@@ -180,7 +180,7 @@ if %errorlevel% neq 0 (
     )
     
     if exist "%APPDATA%\npm\node.exe" (
-        echo � Found Node.js in AppData, adding to PATH...
+        echo 🔍 Found Node.js in AppData, adding to PATH...
         set "PATH=%APPDATA%\npm;%PATH%"
         goto :check_node_again
     )
@@ -188,7 +188,7 @@ if %errorlevel% neq 0 (
     :check_node_again
     node --version >nul 2>&1
     if %errorlevel% neq 0 (
-        echo �📥 Installing Node.js automatically...
+        echo 📥 Installing Node.js automatically...
         
         if defined USE_CHOCO (
             echo [1/3] Trying Chocolatey to install Node.js...
@@ -424,6 +424,6 @@ echo 2. Restart your computer after installing Python/Node.js
 echo 3. Run this script as Administrator if needed
 echo.
 echo Press any key to exit this setup window...
-pause > nul
+pause
 
 cd /d "%PROJECT_ROOT%"
