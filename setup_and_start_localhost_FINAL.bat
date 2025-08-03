@@ -101,10 +101,16 @@ python -m pip install --upgrade pip
 
 echo [INFO] Installing dependencies dari requirements.txt...
 if exist requirements.txt (
-    echo [WARNING] Jika numpy gagal install, script akan lanjut tanpa numpy...
-    pip install -r requirements.txt --timeout 300
-    REM Continue even if some packages fail
-    echo [INFO] Dependency installation attempted
+    echo [INFO] Installing basic packages first...
+    pip install Flask Flask-Cors Flask-SQLAlchemy Flask-Migrate SQLAlchemy python-dotenv
+    pip install Flask-RESTful pytesseract Pillow pdf2image openpyxl thefuzz pandas psycopg2-binary
+    pip install pyspellchecker textdistance
+    
+    echo [INFO] Installing remaining packages (some may fail on devices without build tools)...
+    pip install -r requirements.txt --timeout 300 || (
+        echo [WARNING] Some packages failed to install - aplikasi tetap bisa berjalan untuk fitur dasar
+    )
+    echo [INFO] Dependency installation completed
 ) else (
     echo [ERROR] File requirements.txt tidak ditemukan!
     pause
