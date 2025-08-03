@@ -71,14 +71,23 @@ STEP 3: SETUP BACKEND (PYTHON/FLASK)
 5. Upgrade pip:
    python -m pip install --upgrade pip
 
-6. Install dependencies backend:
+6. Install dependencies backend (critical packages):
    pip install Flask Flask-Cors Flask-SQLAlchemy Flask-Migrate SQLAlchemy python-dotenv
 
-7. Install dependencies tambahan:
+7. Install dependencies tambahan (essential):
    pip install Pillow Flask-RESTful openpyxl thefuzz pandas psycopg2-binary pyspellchecker textdistance
 
-8. Install semua requirements (optional, beberapa mungkin gagal):
+8. Install packages yang membutuhkan compiler (optional, boleh skip jika error):
+   pip install numpy opencv-python pytesseract pdf2image
+
+   CATATAN: Jika step 8 gagal dengan error compiler, skip saja.
+   Aplikasi tetap bisa berjalan untuk fitur dasar tanpa OpenCV.
+
+9. Install dari requirements.txt (optional, banyak yang mungkin gagal):
    pip install -r requirements.txt
+
+   CATATAN: Abaikan error untuk packages seperti numpy, opencv, torch.
+   Fokus pada packages yang berhasil terinstall.
 
 9. Copy file environment:
    copy .env.example .env
@@ -151,10 +160,29 @@ SOLUSI:
 - Reinstall Node.js
 - Restart komputer setelah install
 
-MASALAH: pip install gagal dengan error "Microsoft Visual C++"
+MASALAH: pip install gagal dengan error "Microsoft Visual C++" atau "Unknown compiler"
 SOLUSI:
-- Install Microsoft Visual C++ Build Tools
-- Download dari: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+- Untuk fitur dasar: Skip packages yang error (numpy, opencv-python)
+- Untuk fitur lengkap: Install Microsoft Visual C++ Build Tools
+  Download dari: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+  Pilih "C++ build tools" workload saat install
+
+MASALAH: ModuleNotFoundError 'cv2' atau 'numpy'
+SOLUSI CEPAT:
+- Copy file backend\.env.minimal ke backend\.env
+- Ini akan menjalankan aplikasi dalam mode minimal tanpa OCR
+- Untuk fitur lengkap:
+  1. Install Visual C++ Build Tools: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+  2. Restart komputer
+  3. pip install numpy opencv-python
+  4. Gunakan backend\.env yang asli
+
+MASALAH: Error saat import modules di backend
+SOLUSI:
+- Gunakan mode minimal: copy .env.minimal ke .env  
+- Atau install dependencies satu per satu:
+  pip install Flask Flask-Cors Pillow
+- Skip packages yang error dan fokus pada yang berhasil
 
 MASALAH: Backend error "ModuleNotFoundError"
 SOLUSI:
@@ -182,14 +210,24 @@ SOLUSI:
 FITUR OPSIONAL
 ================================================
 
-PDF PROCESSING (Poppler):
-1. Download Poppler untuk Windows:
-   https://github.com/oschwartz10612/poppler-windows/releases
-   
-2. Extract ke folder seperti: C:\poppler\
+MODE MINIMAL (Jika ada error dependencies):
+- Copy backend\.env.minimal ke backend\.env
+- Aplikasi akan berjalan tanpa fitur OCR/image processing
+- Cocok untuk testing atau jika tidak butuh fitur advanced
 
-3. Update POPPLER_PATH di file backend\.env:
-   POPPLER_PATH="C:\\poppler\\poppler-24.08.0\\Library\\bin"
+PDF PROCESSING (Poppler):
+1. Poppler sudah included di folder tools\poppler\
+2. Jika tidak ada, download dari:
+   https://github.com/oschwartz10612/poppler-windows/releases
+3. Extract dan update POPPLER_PATH di .env
+
+OCR & IMAGE PROCESSING (Advanced):
+1. Install Visual C++ Build Tools:
+   https://visualstudio.microsoft.com/visual-cpp-build-tools/
+2. Install dependencies: pip install numpy opencv-python pytesseract
+3. Download Tesseract OCR:
+   https://github.com/UB-Mannheim/tesseract/wiki
+4. Update path Tesseract di kode jika diperlukan
 
 DATABASE (Supabase):
 1. Buat akun di: https://supabase.com
