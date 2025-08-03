@@ -214,10 +214,17 @@ echo [INFO] Upgrading pip...
 python -m pip install --upgrade pip
 if !errorlevel! neq 0 (
     echo [WARNING] Pip upgrade gagal, melanjutkan dengan versi lama...
+) else (
+    echo [SUCCESS] Pip berhasil diupgrade
 )
 
 echo [INFO] Installing dependencies...
+echo [DEBUG] Current directory: %CD%
+echo [DEBUG] Python path: 
+where python
+
 if exist requirements.txt (
+    echo [DEBUG] requirements.txt found, proceeding with installation...
     echo [STEP 1/3] Installing critical Flask packages...
     pip install Flask Flask-Cors Flask-SQLAlchemy Flask-Migrate SQLAlchemy python-dotenv
     if !errorlevel! neq 0 (
@@ -247,6 +254,7 @@ if exist requirements.txt (
     )
     
     echo [SUCCESS] Dependency installation completed
+    echo [DEBUG] Backend setup completed, moving to frontend...
 ) else (
     echo [ERROR] File requirements.txt tidak ditemukan!
     echo [ERROR] Pastikan script dijalankan dari root folder project
@@ -262,6 +270,7 @@ echo.
 echo ================================================
 echo [FRONTEND] Setting up Frontend (React)
 echo ================================================
+echo [DEBUG] Moving to frontend directory...
 
 cd /d "%~dp0frontend"
 if %errorlevel% neq 0 (
@@ -272,6 +281,10 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+echo [DEBUG] Current directory: %CD%
+echo [DEBUG] Node version check:
+node --version
+
 echo [INFO] Installing dependencies dengan npm...
 npm install
 if !errorlevel! neq 0 (
@@ -280,9 +293,12 @@ if !errorlevel! neq 0 (
     echo [PAUSE] Tekan tombol apapun untuk keluar...
     pause
     exit /b 1
+) else (
+    echo [SUCCESS] NPM install berhasil
 )
 
 echo [SUCCESS] Frontend setup selesai
+echo [DEBUG] Frontend setup completed, moving to start services...
 
 REM ========== START SERVICES ==========
 echo.
