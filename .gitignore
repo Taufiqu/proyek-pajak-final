@@ -37,3 +37,10 @@ yarn-error.log*
 # ========== TESTING ==========
 /.pnp
 .pnp.js
+
+# ========== DEBUGGING FILES (exclude from git) ==========
+debug_*.bat
+setup_*_debug.bat
+setup_*_test.bat
+*_old.bat
+*_backup.bat

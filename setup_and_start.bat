@@ -227,18 +227,23 @@ if exist requirements.txt (
         pause
         exit /b 1
     )
+    echo [SUCCESS] Critical Flask packages installed
     
     echo [STEP 2/3] Installing utility packages...
     pip install Flask-RESTful pytesseract Pillow pdf2image openpyxl thefuzz pandas psycopg2-binary pyspellchecker textdistance
     if !errorlevel! neq 0 (
         echo [WARNING] Beberapa utility packages gagal install, melanjutkan...
+    ) else (
+        echo [SUCCESS] Utility packages installed
     )
     
-    echo [STEP 3/3] Installing remaining packages...
+    echo [STEP 3/3] Installing remaining packages (some may fail)...
     pip install -r requirements.txt --timeout 300
     if !errorlevel! neq 0 (
         echo [WARNING] Beberapa packages gagal install - aplikasi mungkin masih bisa berjalan untuk fitur dasar
         echo [WARNING] Error packages biasanya: numpy, opencv, torch (butuh build tools)
+    ) else (
+        echo [SUCCESS] All requirements.txt packages installed
     )
     
     echo [SUCCESS] Dependency installation completed
