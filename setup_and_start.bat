@@ -295,7 +295,7 @@ cd /d "%~dp0backend"
 start "Backend-Flask" cmd /k "call venv\Scripts\activate.bat && python app.py"
 
 echo [INFO] Menunggu backend start...
-timeout /t 5 /nobreak >nul
+timeout /t 20 /nobreak >nul
 
 echo [INFO] Starting Frontend (React) di port 3000...
 cd /d "%~dp0frontend"

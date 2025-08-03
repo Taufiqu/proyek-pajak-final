@@ -1,6 +1,24 @@
 # 🚀 Pajak Tools - Automated Setup & Deploy
 
-## 📋 Quick Start (Recommended)
+## 📋```
+proyek-pajak-final/
+├── setup_and_start.bat                     # 🚀 FIRST TIME: Setup + Start
+├── start_only.bat                          # ▶️ NEXT TIME: Start Only
+├── README.md                               # 📖 This documentation
+├── QUICK_START.md                          # 📋 Simple instructions
+├── SETUP_INSTRUCTIONS.md                  # 📖 Detailed setup guide
+├── backend/                               # 🐍 Python Flask API
+│   ├── venv/                             # Virtual environment (auto-created)
+│   ├── app.py                            # Main application
+│   ├── requirements.txt                  # Full dependencies
+│   ├── requirements_basic.txt            # Essential dependencies only
+│   └── ...
+├── frontend/                             # ⚛️ React Application
+│   ├── src/                             # Source code
+│   ├── package.json                     # Node dependencies
+│   └── ...
+└── .gitignore                            # Git ignore rules
+```ommended)
 
 1. **Download Project**
    ```bash
@@ -10,13 +28,31 @@
 
 2. **Run Setup Script**
    ```bash
-   # Double-click atau run dari Command Prompt
+   # FIRST TIME: Setup everything + start
    setup_and_start.bat
+   
+   # NEXT TIME: Just start (after setup done)
+   start_only.bat
    ```
 
 3. **Access Application**
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:5000
+
+## 🔄 **Usage Workflow**
+
+### 🆕 **First Time (Fresh Download):**
+1. Download project → Extract → Run `setup_and_start.bat`
+2. Wait for complete setup (Python, Node.js, dependencies)
+3. Applications will start automatically
+
+### ▶️ **Next Time (Already Setup):**
+1. Just run `start_only.bat`
+2. Applications start immediately (no setup needed)
+
+### 🔧 **Need to Reinstall/Update:**
+1. Delete `backend/venv` and `frontend/node_modules` folders
+2. Run `setup_and_start.bat` again
 
 ## ✅ Script Features
 
